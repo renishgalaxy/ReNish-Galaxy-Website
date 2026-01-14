@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReNish Galaxy - Creative Universe</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --deep-black: #000000;
+            --space-blue: #0a0a23;
+            --neon-purple: #9d4edd;
+            --electric-cyan: #00d4ff;
+            --cosmic-purple: #5a189a;
+            --star-white: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: var(--deep-black);
+            color: var(--star-white);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Galaxy Background */
+        .galaxy-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(125deg, var(--deep-black) 0%, var(--space-blue) 50%, var(--cosmic-purple) 100%);
+            z-index: -2;
+        }
+
+        /* Animated Stars */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--star-white);
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+
+        /* Floating Particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--electric-cyan);
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            from {
+                transform: translateY(100vh) translateX(0);
+            }
+            to {
+                transform: translateY(-100vh) translateX(100px);
+            }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 50px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            padding: 10px 50px;
+            background: rgba(0, 0, 0, 0.9);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            background: linear-gradient(45deg, var(--neon-purple), var(--electric-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--star-white);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--electric-cyan);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--electric-cyan);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            z-index: 1;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--neon-purple), var(--electric-cyan), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient 3s ease infinite;
+            background-size: 200% 200%;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--neon-purple), var(--electric-cyan));
+            color: var(--star-white);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--electric-cyan);
+            border: 2px solid var(--electric-cyan);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        /* Services Section */
+        .services {
+            padding: 100px 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            margin-bottom: 60px;
+            background: linear-gradient(45deg, var(--neon-purple), var(--electric-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--neon-purple) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .service-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(157, 78, 221, 0.3);
+            border-color: var(--neon-purple);
+        }
+
+        .service-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .service-title {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: var(--electric-cyan);
+        }
+
+        .service-description {
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        /* Portfolio Section */
+        .portfolio {
+            padding: 100px 50px;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .portfolio-filters {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            color: var(--star-white);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: var(--neon-purple);
+            border-color: var(--neon-purple);
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .portfolio-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+        }
+
+        .portfolio-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.3);
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 100px 50px;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 50px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .stat-item {
+            padding: 30px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-10px);
+            border-color: var(--electric-cyan);
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: bold;
+            color: var(--electric-cyan);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 18px;
+            opacity: 0.8;
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 150px 50px;
+            text-align: center;
+            background: linear-gradient(180deg, transparent 0%, rgba(157, 78, 221, 0.1) 100%);
+        }
+
+        .cta h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, var(--neon-purple), var(--electric-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            color: var(--star-white);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .services-grid,
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 200px;
+            }
+        }
+
+        /* Loading Animation */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--deep-black);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader-circle {
+            width: 50px;
+            height: 50px;
+            border: 3px solid var(--glass-border);
+            border-top-color: var(--electric-cyan);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <!-- Loader -->
+    <div class="loader" id="loader">
+        <div class="loader-circle"></div>
+    </div>
+
+    <!-- Galaxy Background -->
+    <div class="galaxy-bg"></div>
+    
+    <!-- Stars -->
+    <div class="stars" id="stars"></div>
+    
+    <!-- Particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">ReNish Galaxy</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#stats">Stats</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>ReNish Galaxy</h1>
+            <p class="hero-subtitle">Photography. Films. Animation. 3D Models. Digital Creation.</p>
+            <div class="cta-buttons">
+                <a href="#services" class="btn btn-primary">Create With Us</a>
+                <a href="#portfolio" class="btn btn-secondary">Explore the Galaxy</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <h2 class="section-title">Our Creative Universe</h2>
+        <div class="services-grid" id="servicesGrid">
+            <!-- Services will be dynamically loaded here -->
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section class="portfolio" id="portfolio">
+        <h2 class="section-title">Creative Portfolio</h2>
+        <div class="portfolio-filters">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="photos">Photos</button>
+            <button class="filter-btn" data-filter="videos">Videos</button>
+            <button class="filter-btn" data-filter="animations">Animations</button>
+            <button class="filter-btn" data-filter="3d">3D Models</button>
+            <button class="filter-btn" data-filter="creative">Creative Products</button>
+        </div>
+        <div class="portfolio-grid" id="portfolioGrid">
+            <!-- Portfolio items will be dynamically loaded here -->
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats" id="stats">
+        <h2 class="section-title">Our Creative Impact</h2>
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number" data-target="500">0</div>
+                <div class="stat-label">Projects Created</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-target="1000">0</div>
+                <div class="stat-label">Visual Worlds Designed</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-target="10000">0</div>
+                <div class="stat-label">Creative Hours Invested</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta" id="contact">
+        <h2>Your Idea Is Energy. We Shape It Into a Universe.</h2>
+        <a href="#" class="btn btn-primary">Start Your Creation Journey</a>
+    </section>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <script>
+        // Services Data
+        const services = [
+            {
+                icon: '📸',
+                title: 'Photography & Photo Editing',
+                category: 'photos',
+                description: 'Cinematic photography, advanced photo retouching, color grading & visual enhancement',
+                details: 'Our photography services capture moments with cinematic excellence. From portrait sessions to product photography, we bring your vision to life with professional equipment and advanced editing techniques.'
+            },
+            {
+                icon: '🎬',
+                title: 'Video Production & Editing',
+                category: 'videos',
+                description: 'Cinematic films & ads, YouTube & social media videos, transitions, VFX, sound design',
+                details: 'Create compelling video content that tells your story. From concept to final cut, we handle all aspects of video production with cinematic quality and engaging narratives.'
+            },
+            {
+                icon: '🌀',
+                title: 'Animation Creation',
+                category: 'animations',
+                description: '2D & 3D animation, motion graphics, title animations & storytelling',
+                details: 'Bring your ideas to life with stunning animations. Whether it\'s 2D explainer videos or complex 3D animations, we create motion graphics that captivate and communicate.'
+            },
+            {
+                icon: '🧊',
+                title: '3D & Model Creation',
+                category: '3d',
+                description: '3D models (products, characters, environments), CGI renders, game & film-ready assets',
+                details: 'Create immersive 3D experiences with our modeling services. From product visualizations to character designs, we build detailed 3D assets for any project.'
+            },
+            {
+                icon: '⚙️',
+                title: 'Digital & Creative Tech',
+                category: 'creative',
+                description: 'Websites & web apps, AI-powered tools, branding & identity systems',
+                details: 'Leverage cutting-edge technology for your creative projects. We develop custom websites, AI-powered solutions, and comprehensive branding systems.'
+            },
+            {
+                icon: '🎨',
+                title: 'Creative Consultation',
+                category: 'creative',
+                description: 'Creative direction, project planning, artistic vision & strategy',
+                details: 'Get expert guidance on your creative projects. We help develop artistic vision, plan execution strategies, and ensure your project achieves its full potential.'
+            }
+        ];
+
+        // Portfolio Data
+        const portfolioItems = [
+            { id: 1, title: 'Cosmic Portrait Series', category: 'photos', image: 'https://via.placeholder.com/400x300/9d4edd/ffffff?text=Portrait+Series' },
+            { id: 2, title: 'Brand Film - Tech Startup', category: 'videos', image: 'https://via.placeholder.com/400x300/00d4ff/ffffff?text=Brand+Film' },
+            { id: 3, title: '3D Product Visualization', category: '3d', image: 'https://via.placeholder.com/400x300/5a189a/ffffff?text=3D+Product' },
+            { id: 4, title: 'Motion Graphics Reel', category: 'animations', image: 'https://via.placeholder.com/400x300/9d4edd/ffffff?text=Motion+Graphics' },
+            { id: 5, title: 'Creative Brand Identity', category: 'creative', image: 'https://via.placeholder.com/400x300/00d4ff/ffffff?text=Brand+Identity' },
+            { id: 6, title: 'Landscape Photography', category: 'photos', image: 'https://via.placeholder.com/400x300/5a189a/ffffff?text=Landscape+Photo' },
+            { id: 7, title: 'Animated Logo Design', category: 'animations', image: 'https://via.placeholder.com/400x300/9d4edd/ffffff?text=Animated+Logo' },
+            { id: 8, title: 'Corporate Video Series', category: 'videos', image: 'https://via.placeholder.com/400x300/00d4ff/ffffff?text=Corporate+Video' },
+            { id: 9, title: 'Character 3D Model', category: '3d', image: 'https://via.placeholder.com/400x300/5a189a/ffffff?text=3D+Character' }
+        ];
+
+        // DOM Elements
+        const loader = document.getElementById('loader');
+        const navbar = document.getElementById('navbar');
+        const servicesGrid = document.getElementById('servicesGrid');
+        const portfolioGrid = document.getElementById('portfolioGrid');
+        const modal = document.getElementById('modal');
+        const modalContent = document.getElementById('modalContent');
+        const closeModal = document.getElementById('closeModal');
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                loader.classList.add('hidden');
+            }, 1000);
+
+            createStars();
+            createParticles();
+            loadServices();
+            loadPortfolio();
+            setupEventListeners();
+            setupScrollAnimations();
+            setupCounters();
+        });
+
+        // Create animated stars
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const starCount = 200;
+
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = (Math.random() * 20 + 10) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Load services dynamically
+        function loadServices() {
+            services.forEach(service => {
+                const card = document.createElement('div');
+                card.className = 'service-card';
+                card.innerHTML = `
+                    <span class="service-icon">${service.icon}</span>
+                    <h3 class="service-title">${service.title}</h3>
+                    <p class="service-description">${service.description}</p>
+                `;
+                card.addEventListener('click', () => openModal(service));
+                servicesGrid.appendChild(card);
+            });
+        }
+
+        // Load portfolio dynamically
+        function loadPortfolio() {
+            portfolioItems.forEach(item => {
+                const portfolioItem = document.createElement('div');
+                portfolioItem.className = 'portfolio-item';
+                portfolioItem.setAttribute('data-category', item.category);
+                portfolioItem.innerHTML = `
+                    <img src="${item.image}" alt="${item.title}">
+                    <div class="portfolio-overlay">
+                        <h3>${item.title}</h3>
+                        <p>${item.category.charAt(0).toUpperCase() + item.category.slice(1)}</p>
+                    </div>
+                `;
+                portfolioItem.addEventListener('click', () => openModal(item));
+                portfolioGrid.appendChild(portfolioItem);
+            });
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Navbar scroll effect
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+
+            // Portfolio filtering
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const filter = btn.getAttribute('data-filter');
+                    
+                    // Update active button
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    // Filter portfolio items
+                    document.querySelectorAll('.portfolio-item').forEach(item => {
+                        if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                            item.style.display = 'block';
+                            setTimeout(() => {
+                                item.style.opacity = '1';
+                                item.style.transform = 'scale(1)';
+                            }, 10);
+                        } else {
+                            item.style.opacity = '0';
+                            item.style.transform = 'scale(0.8)';
+                            setTimeout(() => {
+                                item.style.display = 'none';
+                            }, 300);
+                        }
+                    });
+                });
+            });
+
+            // Modal close
+            closeModal.addEventListener('click', closeModalFunc);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeModalFunc();
+            });
+        }
+
+        // Modal functions
+        function openModal(content) {
+            if (content.title) {
+                modalContent.innerHTML = `
+                    <h2>${content.title}</h2>
+                    <p>${content.details || content.description || 'Details coming soon...'}</p>
+                `;
+            }
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModalFunc() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Scroll animations
+        function setupScrollAnimations() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -100px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe elements for animation
+            document.querySelectorAll('.service-card, .portfolio-item, .stat-item').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'all 0.6s ease';
+                observer.observe(el);
+            });
+        }
+
+        // Animated counters
+        function setupCounters() {
+            const counters = document.querySelectorAll('.stat-number');
+            const speed = 200;
+
+            const countUp = (counter) => {
+                const target = +counter.getAttribute('data-target');
+                const count = +counter.innerText;
+                const increment = target / speed;
+
+                if (count < target) {
+                    counter.innerText = Math.ceil(count + increment);
+                    setTimeout(() => countUp(counter), 10);
+                } else {
+                    counter.innerText = target.toLocaleString();
+                }
+            };
+
+            const counterObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        countUp(entry.target);
+                        counterObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            counters.forEach(counter => {
+                counterObserver.observe(counter);
+            });
+        }
+
+        // Mouse parallax effect
+        document.addEventListener('mousemove', (e) => {
+            const mouseX = e.clientX / window.innerWidth;
+            const mouseY = e.clientY / window.innerHeight;
+
+            const stars = document.querySelectorAll('.star');
+            stars.forEach((star, index) => {
+                const speed = (index % 5 + 1) * 0.5;
+                star.style.transform = `translate(${mouseX * speed}px, ${mouseY * speed}px)`;
+            });
+
+            const particles = document.querySelectorAll('.particle');
+            particles.forEach((particle, index) => {
+                const speed = (index % 3 + 1) * 0.3;
+                particle.style.transform += ` translate(${mouseX * speed}px, ${mouseY * speed}px)`;
+            });
+        });
+
+        // Add glow effect to interactive elements
+        document.querySelectorAll('.service-card, .portfolio-item, .btn').forEach(element => {
+            element.addEventListener('mouseenter', function() {
+                this.style.boxShadow = '0 0 30px rgba(0, 212, 255, 0.5)';
+            });
+            
+            element.addEventListener('mouseleave', function() {
+                this.style.boxShadow = '';
+            });
+        });
+    </script>
+</body>
+</html>
